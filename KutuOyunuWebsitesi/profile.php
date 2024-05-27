@@ -67,6 +67,23 @@ $mysqli->close();
             transform: translateY(-5px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .github-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .github-button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -147,7 +164,6 @@ $mysqli->close();
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['email']; ?>" required>
-                        </div
                         </div>
                         <div class="form-group">
                             <label for="gsm">GSM</label>
@@ -163,6 +179,9 @@ $mysqli->close();
             </div>
         </div>
     </div>
+
+    <!-- GitHub Butonu -->
+    <a href="https://github.com/Enesevki/kutuoyunu" class="github-button" target="_blank">GitHub</a>
 
     <script>
         $(document).ready(function() {
