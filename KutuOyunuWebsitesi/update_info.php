@@ -6,7 +6,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Veritabanı bağlantısı
-$mysqli = new mysqli("localhost", "root", "", "dbstorage21360859079");
+$mysqli = new mysqli("localhost", "dbusr21360859079", "WrAE8zOmcb88", "dbstorage21360859079");
 
 if ($mysqli->connect_error) {
     die("Veritabanına bağlanırken hata oluştu: " . $mysqli->connect_error);
@@ -18,9 +18,14 @@ $email = $_POST['email'];
 $gsm = $_POST['gsm'];
 $birthdate = $_POST['birthdate'];
 
-// Veritabanında kullanıcı bilgilerini güncelle
-$query = "UPDATE users SET first_name='$fullname', email='$email', gsm_no='$gsm', birth_date='$birthdate' WHERE username='" . $_SESSION['username'] . "'";
-if ($mysqli->query($query) === TRUE) {
+// Tarih formatını dönüştür
+$birthdate = DateTime::createFromFormat('d.m.Y', $birthdate)->format('Y-m-d');
+
+// Veritabanında kullanıcı bilgilerini güncellemek için prepared statement kullanın
+$stmt = $mysqli->prepare("UPDATE users SET first_name=?, email=?, gsm_no=?, birth_date=? WHERE username=?");
+$stmt->bind_param("sssss", $fullname, $email, $gsm, $birthdate, $_SESSION['username']);
+
+if ($stmt->execute()) {
     // Yönlendirme yaparak profil sayfasına geri dön
     // Session değerlerini güncelle
     $_SESSION['fullname'] = $fullname;
@@ -31,8 +36,9 @@ if ($mysqli->query($query) === TRUE) {
     header("Location: profile.php");
     exit();
 } else {
-    echo "Bilgileri güncellemede bir hata oluştu: " . $mysqli->error;
+    echo "Bilgileri güncellemede bir hata oluştu: " . $stmt->error;
 }
 
+$stmt->close();
 $mysqli->close();
 ?>
