@@ -8,7 +8,7 @@ if (!isset($_SESSION['username'])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['member_id'])) {
     // Veritabanı bağlantısı
-    $mysqli = new mysqli("localhost", "dbusr21360859079", "WrAE8zOmcb88", "dbstorage21360859079");
+    $mysqli = new mysqli("localhost", "root", "", "dbstorage21360859079");
 
     if ($mysqli->connect_error) {
         die("Veritabanına bağlanırken hata oluştu: " . $mysqli->connect_error);

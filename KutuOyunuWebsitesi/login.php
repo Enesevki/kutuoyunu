@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Veritabanı bağlantısı
-    $mysqli = new mysqli("localhost", "dbusr21360859079", "WrAE8zOmcb88", "dbstorage21360859079");
+    $mysqli = new mysqli("localhost", "root", "", "dbstorage21360859079");
     if (!$mysqli) {
         die("Veritabanı bağlantısı başarısız: " . mysqli_connect_error());
     } else {
